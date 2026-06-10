@@ -1,0 +1,11 @@
+| #  | Alias (Query)           | Campo Excel     | Estado | Comentario                                                              |
+|----|--------------------------|-----------------|--------|-------------------------------------------------------------------------|
+| 1  | IdOperation             | RETRIEVALREFNO  | ⚠️     | Correspondencia dudosa: IdOperation es un ID interno de operación,      |
+| 2  | Account                 | ACCOUNT         | ✅     |                                                                         |
+| 3  | OperationDate           | OPERATION_DATE  | ✅     |                                                                         |
+| 4  | Currency                | CURRENCY        | ✅     |                                                                         |
+| 5  | Sign                    | SIGN            | ✅     |                                                                         |
+| 6  | OperationAmount         | AMOUNT          | ✅     |                                                                         |
+| 7  | AffectedInterestTaxed   | INTEREST_TAXED  | ✅     |                                                                         |
+| 8  | AffectedInterestExcent  | INTEREST_EXCENT | ✅     |                                                                         |
+| 9  | Tax                     | IVA             | ✅     |                                                                         |

@@ -1,0 +1,19 @@
+| #  | Query                    | Excel                              | Estado | Comentario                          |
+|----|--------------------------|------------------------------------|--------|-------------------------------------|
+| 1  | CardNumber               | NUMERO DE TARJETA                  | ✅     |                                     |
+| 2  | Document                 | DOCUMENTO                          | ✅     |                                     |
+| 3  | InternalAccountNumber    | NUMERO DE CUENTA INTERNO           | ✅     |                                     |
+| 4  | StatusCode               | ESTADO DE LA TARJETA               | ✅     |                                     |
+| 5  | IssueDate                | FECHA EMISION                      | ✅     |                                     |
+| 6  | InactiveDate             | FECHA INACTIVACION                 | ✅     |                                     |
+| 7  | DueDate                  | FECHA VTO DE LA TARJETA            | ✅     |                                     |
+| 8  | SecuenceNumber           | SECUENCIAL                         | ✅     |                                     |
+| 9  | DocumentType             | Tipo de Documento                  | ✅     |                                     |
+| 10 | DocTypeDescription       | Descripción de tipo de documento   | ✅     |                                     |
+| 11 | Category                 | CATEGORÍA                          | ✅     |                                     |
+| 12 | ProductCode              | CÓDIGO DE PRODUCTO                 | ✅     |                                     |
+| 13 | ProductDescription       | NOMBRE DEL PRODUCTO                | ✅     |                                     |
+| 14 | ProductGroupCode         | GRUPO DE PRODUCTO                  | ✅     |                                     |
+| 15 | TrackingID               | TRACKING ID                        | ✅     |                                     |
+| 16 | PaymentMediaStatusType   | TIPO DE ESTADO DE LA TARJETA       | ✅     |                                     |
+| 17 | ❌ Sin alias en la Query  | NOMBRE DE EMBOZADO                 | ❌    | No existe campo equivalente en el SELECT |
