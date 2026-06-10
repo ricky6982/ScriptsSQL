@@ -77,7 +77,7 @@ IF EXISTS (SELECT 1
           AND OPERATION_NAME = 'GetCardExpensesSummary';
     END;
 
-
+--------------------------------------------------------------
 -- Account Expenses Summary
 SELECT pm.CARD_NUMBER                                      AS CardNumber,
        COALESCE(SUM(mov.AMOUNT * mov.MOVEMENT_SIGN), 0.00) AS Amount
@@ -115,7 +115,7 @@ GROUP BY pm.CARD_NUMBER
 SELECT pm.CARD_NUMBER                                      AS CardNumber,
        COALESCE(SUM(mov.AMOUNT * mov.MOVEMENT_SIGN), 0.00) AS Amount
 FROM IAC_PAYMENT_MEDIA pm
-         JOIN ICS_PAYMENT_MEDIA_RELATION pmr ON pm.ID_PAYMENT_MEDIA = pmr.ID_PAYMENT_MEDIA
+         Left JOIN ICS_PAYMENT_MEDIA_RELATION pmr ON pm.ID_PAYMENT_MEDIA = pmr.ID_PAYMENT_MEDIA
          JOIN ICS_ACCOUNT_RELATION ar ON pmr.ID_ACCOUNT_RELATION = ar.ID_ACCOUNT_RELATION
          JOIN ICS_FINANCIAL_RELATION fr ON ar.ID_FINANCIAL_RELATION = fr.ID_FINANCIAL_RELATION
          JOIN IAC_GENERAL_ACCOUNT ga ON fr.ID_GENERAL_ACCOUNT = ga.ID_GENERAL_ACCOUNT
@@ -125,4 +125,36 @@ FROM IAC_PAYMENT_MEDIA pm
     AND ((mov.MOVEMENT_TYPE = 4) OR (mov.MOVEMENT_TYPE = 13))
          LEFT JOIN IOP_OPERATION o ON o.ID_OPERATION = mov.ID_OPERATION
     AND ((o.OPERATION_TYPE = 1 AND mov.MOVEMENT_TYPE = 4) OR (o.OPERATION_TYPE = 2 AND mov.MOVEMENT_TYPE = 13))
+GROUP BY pm.CARD_NUMBER
+
+
+-- Query de taruman
+SELECT
+    pm.CARD_NUMBER AS CardNumber,
+    COALESCE(SUM(mov.AMOUNT * mov.MOVEMENT_SIGN), 0.00) AS Amount
+FROM IAC_PAYMENT_MEDIA pm
+
+         JOIN ICS_PAYMENT_MEDIA_RELATION pmr ON pm.ID_PAYMENT_MEDIA = pmr.ID_PAYMENT_MEDIA
+         JOIN ICS_ACCOUNT_RELATION ar ON pmr.ID_ACCOUNT_RELATION = ar.ID_ACCOUNT_RELATION
+         JOIN ICS_FINANCIAL_RELATION fr ON ar.ID_FINANCIAL_RELATION = fr.ID_FINANCIAL_RELATION
+         JOIN IAC_GENERAL_ACCOUNT ga ON fr.ID_GENERAL_ACCOUNT = ga.ID_GENERAL_ACCOUNT
+
+         LEFT JOIN IFN_MOVEMENT mov ON ga.ID_GENERAL_ACCOUNT = mov.ID_GENERAL_ACCOUNT_PERF
+    AND mov.ID_CYCLE = ga.ID_CYCLE
+    AND mov.PERIOD = ga.ACCOUNT_PERIOD
+    AND mov.ID_ORIGINAL_PARENT IS NULL
+    AND mov.ID_PARENT_MOVEMENT IS NULL
+
+         LEFT JOIN IOP_OPERATION o ON o.ID_OPERATION = mov.ID_OPERATION
+    AND (
+                                          (o.OPERATION_TYPE = 1 AND mov.MOVEMENT_TYPE = 4)
+                                              OR
+                                          (o.OPERATION_TYPE = 2 AND mov.MOVEMENT_TYPE = 13)
+                                          )
+WHERE
+    ga.INTERNAL_ACCOUNT_NUMBER = '0000000048'
+  --AND
+--     pm.CARD_NUMBER = :CardNumber
+--   AND pm.DUE_DATE = :DueDate
+  --AND ga.ID_ISSUER = :IdIssuer
 GROUP BY pm.CARD_NUMBER

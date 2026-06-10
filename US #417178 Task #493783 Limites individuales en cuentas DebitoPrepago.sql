@@ -16,6 +16,82 @@ WHERE lower(r.ROLE_NAME) LIKE 'admin%'
       AND ID_PLATFORM = 1
 );
 
+IF NOT EXISTS (SELECT 1 FROM TRD_SYSTEM_SERVICE WHERE INTERFACE_NAME = 'IIndividualDebitAccountLimitsService' AND OPERATION_NAME = 'GetHistoricalLimitsByAccountRelation')
+    BEGIN
+        INSERT INTO TRD_SYSTEM_SERVICE (INTERFACE_NAME, OPERATION_NAME, IS_IDEMPOTENT)
+        VALUES ('IIndividualDebitAccountLimitsService', 'GetHistoricalLimitsByAccountRelation', 0);
+    END;
+
+INSERT INTO TRD_SERVICE_PERM (INTERFACE_NAME, OPERATION_NAME, ID_ROLE, ID_PLATFORM, PERMISSION)
+SELECT 'IIndividualDebitAccountLimitsService', 'GetHistoricalLimitsByAccountRelation', ID_ROLE, 1, 3
+FROM TRD_ROLE r
+WHERE lower(r.ROLE_NAME) LIKE 'admin%'
+  AND NOT EXISTS (
+    SELECT 1 FROM TRD_SERVICE_PERM
+    WHERE INTERFACE_NAME = 'IIndividualDebitAccountLimitsService'
+      AND OPERATION_NAME = 'GetHistoricalLimitsByAccountRelation'
+      AND ID_ROLE = r.ID_ROLE
+      AND ID_PLATFORM = 1
+);
+
+IF NOT EXISTS (SELECT 1 FROM TRD_SYSTEM_SERVICE WHERE INTERFACE_NAME = 'IIndividualDebitAccountLimitsService' AND OPERATION_NAME = 'GetProductWithIndividualLimits')
+    BEGIN
+        INSERT INTO TRD_SYSTEM_SERVICE (INTERFACE_NAME, OPERATION_NAME, IS_IDEMPOTENT)
+        VALUES ('IIndividualDebitAccountLimitsService', 'GetProductWithIndividualLimits', 0);
+    END;
+
+INSERT INTO TRD_SERVICE_PERM (INTERFACE_NAME, OPERATION_NAME, ID_ROLE, ID_PLATFORM, PERMISSION)
+SELECT 'IIndividualDebitAccountLimitsService', 'GetProductWithIndividualLimits', ID_ROLE, 1, 3
+FROM TRD_ROLE r
+WHERE lower(r.ROLE_NAME) LIKE 'admin%'
+  AND NOT EXISTS (
+    SELECT 1 FROM TRD_SERVICE_PERM
+    WHERE INTERFACE_NAME = 'IIndividualDebitAccountLimitsService'
+      AND OPERATION_NAME = 'GetProductWithIndividualLimits'
+      AND ID_ROLE = r.ID_ROLE
+      AND ID_PLATFORM = 1
+);
+
+IF NOT EXISTS (SELECT 1 FROM TRD_SYSTEM_SERVICE WHERE INTERFACE_NAME = 'IIndividualDebitAccountLimitsService' AND OPERATION_NAME = 'GetCustomersWithIndividualLimits')
+    BEGIN
+        INSERT INTO TRD_SYSTEM_SERVICE (INTERFACE_NAME, OPERATION_NAME, IS_IDEMPOTENT)
+        VALUES ('IIndividualDebitAccountLimitsService', 'GetCustomersWithIndividualLimits', 0);
+    END;
+
+INSERT INTO TRD_SERVICE_PERM (INTERFACE_NAME, OPERATION_NAME, ID_ROLE, ID_PLATFORM, PERMISSION)
+SELECT 'IIndividualDebitAccountLimitsService', 'GetCustomersWithIndividualLimits', ID_ROLE, 1, 3
+FROM TRD_ROLE r
+WHERE lower(r.ROLE_NAME) LIKE 'admin%'
+  AND NOT EXISTS (
+    SELECT 1 FROM TRD_SERVICE_PERM
+    WHERE INTERFACE_NAME = 'IIndividualDebitAccountLimitsService'
+      AND OPERATION_NAME = 'GetCustomersWithIndividualLimits'
+      AND ID_ROLE = r.ID_ROLE
+      AND ID_PLATFORM = 1
+);
+
+IF NOT EXISTS (SELECT 1 FROM TRD_SYSTEM_SERVICE WHERE INTERFACE_NAME = 'IIndividualDebitAccountLimitsService' AND OPERATION_NAME = 'SaveChange')
+    BEGIN
+        INSERT INTO TRD_SYSTEM_SERVICE (INTERFACE_NAME, OPERATION_NAME, IS_IDEMPOTENT)
+        VALUES ('IIndividualDebitAccountLimitsService', 'SaveChange', 0);
+    END;
+
+INSERT INTO TRD_SERVICE_PERM (INTERFACE_NAME, OPERATION_NAME, ID_ROLE, ID_PLATFORM, PERMISSION)
+SELECT 'IIndividualDebitAccountLimitsService', 'SaveChange', ID_ROLE, 1, 3
+FROM TRD_ROLE r
+WHERE lower(r.ROLE_NAME) LIKE 'admin%'
+  AND NOT EXISTS (
+    SELECT 1 FROM TRD_SERVICE_PERM
+    WHERE INTERFACE_NAME = 'IIndividualDebitAccountLimitsService'
+      AND OPERATION_NAME = 'SaveChange'
+      AND ID_ROLE = r.ID_ROLE
+      AND ID_PLATFORM = 1
+);
+
+--          GetCustomersWithIndividualLimits
+--          GetProductWithIndividualLimits
+--          GetHistoricalLimitsByAccountRelation
+
 
 IF NOT EXISTS (SELECT 1 FROM TVM_USE_CASE WHERE ID_USE_CASE = 'ICSUC078_IndividualDebitAccountLimits')
     BEGIN
