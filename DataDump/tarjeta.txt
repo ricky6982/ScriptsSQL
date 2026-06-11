@@ -1,19 +1,32 @@
-| #  | Query                    | Excel                              | Estado | Comentario                          |
-|----|--------------------------|------------------------------------|--------|-------------------------------------|
-| 1  | CardNumber               | NUMERO DE TARJETA                  | ✅     |                                     |
-| 2  | Document                 | DOCUMENTO                          | ✅     |                                     |
-| 3  | InternalAccountNumber    | NUMERO DE CUENTA INTERNO           | ✅     |                                     |
-| 4  | StatusCode               | ESTADO DE LA TARJETA               | ✅     |                                     |
-| 5  | IssueDate                | FECHA EMISION                      | ✅     |                                     |
-| 6  | InactiveDate             | FECHA INACTIVACION                 | ✅     |                                     |
-| 7  | DueDate                  | FECHA VTO DE LA TARJETA            | ✅     |                                     |
-| 8  | SecuenceNumber           | SECUENCIAL                         | ✅     |                                     |
-| 9  | DocumentType             | Tipo de Documento                  | ✅     |                                     |
-| 10 | DocTypeDescription       | Descripción de tipo de documento   | ✅     |                                     |
-| 11 | Category                 | CATEGORÍA                          | ✅     |                                     |
-| 12 | ProductCode              | CÓDIGO DE PRODUCTO                 | ✅     |                                     |
-| 13 | ProductDescription       | NOMBRE DEL PRODUCTO                | ✅     |                                     |
-| 14 | ProductGroupCode         | GRUPO DE PRODUCTO                  | ✅     |                                     |
-| 15 | TrackingID               | TRACKING ID                        | ✅     |                                     |
-| 16 | PaymentMediaStatusType   | TIPO DE ESTADO DE LA TARJETA       | ✅     |                                     |
-| 17 | ❌ Sin alias en la Query  | NOMBRE DE EMBOZADO                 | ❌    | No existe campo equivalente en el SELECT |
+GetPaymentMediaForDataDumpToReport
+| #  | Query                   | Excel                            | Tamaño | Estado | Comentario                               |
+|----|-------------------------|----------------------------------|--------|--------|------------------------------------------|
+| 1  | CardNumber              | NUMERO DE TARJETA                | 16     | ✅     |                                          |
+| 2  | Document                | DOCUMENTO                        | 10     | ✅     |                                          |
+| 3  | InternalAccountNumber   | NUMERO DE CUENTA INTERNO         | 10     | ✅     |                                          |
+| 4  | StatusCode              | ESTADO DE LA TARJETA             | 100    | ✅     |                                          |
+| 5  | IssueDate               | FECHA EMISION                    | 8      | ✅     |                                          |
+| 6  | InactiveDate            | FECHA INACTIVACION               | 8      | ✅     |                                          |
+| 7  | DueDate                 | FECHA VTO DE LA TARJETA          | 4      | ✅     |                                          |
+| 8  | SecuenceNumber          | SECUENCIAL                       | 1      | ✅     |                                          |
+| 9  | DocumentType            | Tipo de Documento                | 5      | ✅     |                                          |
+| 10 | DocTypeDescription      | Descripción de tipo de documento | 60     | ✅     |                                          |
+| 11 | Category                | CATEGORÍA                        | 2      | ✅     |                                          |
+| 12 | ProductCode             | CÓDIGO DE PRODUCTO               | 6      | ✅     |                                          |
+| 13 | ProductDescription      | NOMBRE DEL PRODUCTO              | 60     | ✅     |                                          |
+| 14 | ProductGroupCode        | GRUPO DE PRODUCTO                | 4      | ✅     |                                          |
+| 15 | TrackingID              | TRACKING ID                      | 12     | ✅     |                                          |
+| 16 | PaymentMediaStatusType  | TIPO DE ESTADO DE LA TARJETA     | 1      | ✅     |                                          |
+| 17 | ❌ Sin alias en la Query | NOMBRE DE EMBOZADO              | 9999   | ❌     | No existe campo equivalente en el SELECT |
+| 18 | Scheme                  | Scheme                           | 2      |        |                                          |
+| 19 | CardTechnology          | CardTechnology                   | 25     |        |                                          |
+| 20 | SDP                     | SDP                              | 25     |        |                                          |
+| 21 | BlockStatusCode         | BlockStatusCode                  | 2      |        |                                          |
+| 22 | BlockCategoryCode       | BlockCategoryCode                | 2      |        |                                          |
+| 23 | Bin                     | Bin                              | 25     |        |                                          |
+| 24 | ICA                     | ICA                              | 25     |        |                                          |
+| 25 | ChipSequence            | ChipSequence                     | 4      |        |                                          |
+| 26 | EmisionTime             | EmisionTime                      | 6      |        |                                          |
+| 27 | PreviusDueDate          | PreviusDueDate                   | 8      |        |                                          |
+| 28 | ActionTaken             | ActionTaken                      | 50     |        |                                          |
+

@@ -45,3 +45,111 @@
 | 43 | SALE_PLAN_CODE                              | SalePlanCode               | ✅     |
 | 44 | SALE_PLAN_NAME                              | SalePlanName               | ✅     |
 | 45 | INTEREST_RATE                               | InterestRate               | ✅     |
+
+agrega una columna entre campo excel y estado con el nombre Tamaño y completa con la siguiente información ademas adapta el orden de la siguiente lista, el resultado agrega al final de este archivo.
+
+Campo	Tamaño
+RETRIEVALREFNO	12
+MERCHANTCATEGORY	4
+RESPONSECODE	3
+TRANSACTIONTYPE	2
+PURCHASEDATE	18
+SALEAMOUNT	13
+SALECURRENCY	3
+ISSUERAMOUNT	13
+ISSUERCURRENCY	3
+PRIMARYACCTNUM	19
+AUTHIDRESPONSE	6
+TERMINALID	8
+CARD ACCEPTOR IDENTIFICATION CODE	15
+CARDACQNAME	40
+MERCHANT_COUNTRY	3
+MERCHANT_STATE	2
+MERCHANT_CITY	50
+MERCHANT_ADRESS	256
+POSENTRYMODE	4
+RESPONSE_DESCRIPTION	255
+ARN	43
+PRESENTATION_DATE	6
+STATUS	1
+PROCESSING_CODE	6
+COUNTRY	3
+STATE	2
+CITY	5
+ZIPCODE	10
+IS_HONORED_TRANSACTION	1
+HONORED_REASON_CODE	2
+INDICADOR_MONETARIO	1
+Indicador si la trx la aplico DCC	1
+Indicador si la transacción fue tokenizada o no	1
+Tipo de Producto	7
+Clase de tarjeta	60
+SETTLEMENT_AMOUNT	13
+SETTLEMENT_CURRENCY_CODE	13
+SETTLEMENT_DATE	6
+TRM_REVENUE	13
+ACCOUNT	19
+ECI	2
+INSTALLMENT_QUANTITY	3
+SALE_PLAN_CODE	4
+SALE_PLAN_NAME	23
+INTEREST_RATE	18
+Transcode_Description	25
+SourceCode	2
+Product_Plan	12
+TransCode	3
+
+---
+
+| #  | QUERY                                       | EXCEL                       | Tamaño | Estado |
+|----|---------------------------------------------|-----------------------------|--------|--------|
+| 1  | RETRIEVALREFNO                              | IdTx                        | 12     | ⚠️     |
+| 2  | MERCHANTCATEGORY                            | MerchantCategory            | 4      | ✅     |
+| 3  | RESPONSECODE                                | ResponseCode                | 3      | ✅     |
+| 4  | TRANSACTIONTYPE                             | TransactionType             | 2      | ✅     |
+| 5  | PURCHASEDATE                                | PurchaseDate                | 18     | ✅     |
+| 6  | SALEAMOUNT                                  | SaleAmount                  | 13     | ✅     |
+| 7  | SALECURRENCY                                | SaleCurrency                | 3      | ✅     |
+| 8  | ISSUERAMOUNT                                | IssuerAmount                | 13     | ✅     |
+| 9  | ISSUERCURRENCY                              | IssuerCurrency              | 3      | ✅     |
+| 10 | PRIMARYACCTNUM                              | CardNumber                  | 19     | ✅     |
+| 11 | AUTHIDRESPONSE                              | AuthorizationCode           | 6      | ✅     |
+| 12 | TERMINALID                                  | TerminalId                  | 8      | ✅     |
+| 13 | CARD ACCEPTOR IDENTIFICATION CODE           | MerchantId                  | 15     | ✅     |
+| 14 | CARDACQNAME                                 | MerchantName                | 40     | ✅     |
+| 15 | MERCHANT_COUNTRY                            | MerchantCountry             | 3      | ✅     |
+| 16 | MERCHANT_STATE                              | MerchantState               | 2      | ✅     |
+| 17 | MERCHANT_CITY                               | MerchantCity                | 50     | ✅     |
+| 18 | MERCHANT_ADRESS                             | MerchantAddress             | 256    | ✅     |
+| 19 | POSENTRYMODE                                | PosEntryMode                | 4      | ✅     |
+| 20 | RESPONSE_DESCRIPTION                        | ResponseDescription         | 255    | ✅     |
+| 21 | ARN                                         | ARN                         | 43     | ✅     |
+| 22 | PRESENTATION_DATE                           | PresentationDate            | 6      | ✅     |
+| 23 | STATUS                                      | Status                      | 1      | ✅     |
+| 24 | PROCESSING_CODE                             | ProcessingCode              | 6      | ✅     |
+| 25 | COUNTRY                                     | Country                     | 3      | ✅     |
+| 26 | STATE                                       | State                       | 2      | ✅     |
+| 27 | CITY                                        | City                        | 5      | ✅     |
+| 28 | ZIPCODE                                     | ZipCode                     | 10     | ✅     |
+| 29 | IS_HONORED_TRANSACTION                      | IsHonoredTransaction        | 1      | ✅     |
+| 30 | HONORED_REASON_CODE                         | HonoredReasonCode           | 2      | ✅     |
+| 31 | INDICADOR_MONETARIO                         | MonetaryIndicator           | 1      | ✅     |
+| 32 | Indicador si la trx la aplicó DCC           | ApliedDCC                   | 1      | ✅     |
+| 33 | Indicador si la transacción fue tokenizada  | TransactionWasTokenized     | 1      | ✅     |
+| 34 | Tipo de Producto                            | ProductType                 | 7      | ✅     |
+| 35 | Clase de tarjeta                            | CardClass                   | 60     | ✅     |
+| 36 | SETTLEMENT_AMOUNT                           | SettlementAmount            | 13     | ✅     |
+| 37 | SETTLEMENT_CURRENCY_CODE                    | SettlementCurrencyCode      | 13     | ✅     |
+| 38 | SETTLEMENT_DATE                             | SettlementDate              | 6      | ✅     |
+| 39 | TRM_REVENUE                                 | TrmRevenue                  | 13     | ✅     |
+| 40 | ACCOUNT                                     | InternalAccountNumber       | 19     | ✅     |
+| 41 | ECI                                         | ComunicationDeviceIndicator | 2      | ✅     |
+| 42 | INSTALLMENT_QUANTITY                        | InstallmentQuantity         | 3      | ✅     |
+| 43 | SALE_PLAN_CODE                              | SalePlanCode                | 4      | ✅     |
+| 44 | SALE_PLAN_NAME                              | SalePlanName                | 23     | ✅     |
+| 45 | INTEREST_RATE                               | InterestRate                | 18     | ✅     |
+| 46 | Transcode_Description                       | Transcode_Description       | 25     |        |
+| 47 | SourceCode                                  | SourceCode                  | 2      |        |
+| 48 | Product_Plan                                | Product_Plan                | 12     |        |
+| 49 | TransCode                                   | TransCode                   | 3      |        |
+
