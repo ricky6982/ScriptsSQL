@@ -1,4 +1,4 @@
-GetPaymentMediaForDataDumpToReport
+GetPaymentMediaForDataDumpToReport - GetPaymentMediaForDataDump
 | #  | Query                   | Excel                            | Tamaño | Estado | Comentario                               |
 |----|-------------------------|----------------------------------|--------|--------|------------------------------------------|
 | 1  | CardNumber              | NUMERO DE TARJETA                | 16     | ✅     |                                          |
@@ -17,7 +17,7 @@ GetPaymentMediaForDataDumpToReport
 | 14 | ProductGroupCode        | GRUPO DE PRODUCTO                | 4      | ✅     |                                          |
 | 15 | TrackingID              | TRACKING ID                      | 12     | ✅     |                                          |
 | 16 | PaymentMediaStatusType  | TIPO DE ESTADO DE LA TARJETA     | 1      | ✅     |                                          |
-| 17 | ❌ Sin alias en la Query | NOMBRE DE EMBOZADO              | 9999   | ❌     | No existe campo equivalente en el SELECT |
+| 17 | EmbossingName           | NOMBRE DE EMBOZADO               | 40     | ❌     | CORREGIDO                                |
 | 18 | Scheme                  | Scheme                           | 2      |        |                                          |
 | 19 | CardTechnology          | CardTechnology                   | 25     |        |                                          |
 | 20 | SDP                     | SDP                              | 25     |        |                                          |

@@ -1,7 +1,7 @@
 GetPenaltyInteresForDataDumpToReport - GetPenaltyInterestForDataDump
 | #  | Alias (Query)          | Campo Excel     | Tamaño | Estado | Comentario                                                         |
 |----|------------------------|-----------------|--------|--------|--------------------------------------------------------------------|
-| 1  | IdOperation            | RETRIEVALREFNO  | 999    | ⚠️      | Correspondencia dudosa: IdOperation es un ID interno de operación, |
+| 1  | IdOperation            | RETRIEVALREFNO  | 12     | ⚠️      | Correspondencia dudosa: IdOperation es un ID interno de operación, |
 | 2  | Account                | ACCOUNT         | 19     | ✅     | En NAVE es InternalAccountNumber                                   |
 | 3  | OperationDate          | OPERATION_DATE  | 8      | ✅     |                                                                    |
 | 4  | Currency               | CURRENCY        | 3      | ✅     |                                                                    |
