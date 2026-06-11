@@ -1,0 +1,46 @@
+| #  | Alias (Query)               | Campo Excel                                      | Estado | Comentario                                                                  |
+|----|-----------------------------|--------------------------------------------------|--------|-----------------------------------------------------------------------------|
+| 1  | IdTransaction               | RETRIEVALREFNO                                   | ⚠️     | IdTransaction es ID interno del sistema, no equivale a un RRN estándar ISO  |
+| 2  | InternalAccountNumber       | ACCOUNT                                          | ✅     |                                                                             |
+| 3  | MCC                         | MERCHANTCATEGORY                                 | ✅     |                                                                             |
+| 4  | ResponseCode                | RESPONSECODE                                     | ✅     |                                                                             |
+| 5  | TransactionType             | TRANSACTIONTYPE                                  | ✅     |                                                                             |
+| 6  | DateLocal                   | DATELOCALTRANS                                   | ✅     |                                                                             |
+| 7  | TimeLocal                   | TIMELOCALTRANS                                   | ✅     |                                                                             |
+| 8  | SaleAmount                  | AMOUNTTRANS                                      | ✅     |                                                                             |
+| 9  | SaleCurrency                | CURRENCY                                         | ✅     |                                                                             |
+| 10 | CardNumber                  | PRIMARYACCTNUM                                   | ✅     |                                                                             |
+| 11 | CardBillingAmount           | CARDHOLDERBILLING                                | ✅     |                                                                             |
+| 12 | CardBillingCurrency         | CURRENCYCARDHOLDERBILLING                        | ✅     |                                                                             |
+| 13 | Convertion                  | CONVERSIONRATE                                   | ✅     |                                                                             |
+| 14 | AuthCode                    | AUTHIDRESPONSE                                   | ✅     |                                                                             |
+| 15 | TerminalID                  | TERMINALID                                       | ✅     |                                                                             |
+| 16 | MerchantID                  | CARD ACCEPTOR IDENTIFICATION CODE                | ✅     |                                                                             |
+| 17 | MerchantName                | CARDACQNAME                                      | ✅     |                                                                             |
+| 18 | EntryMode                   | POSENTRYMODE                                     | ✅     |                                                                             |
+| 19 | ResponseDescription         | RESPONSE_DESCRIPTION                             | ✅     |                                                                             |
+| 20 | isFinancial                 | INDICADOR_MONETARIO                              | ✅     |                                                                             |
+| 21 | ApliedDCC                   | Indicador si la trx la aplico DCC                | ✅     |                                                                             |
+| 22 | ApliedTokenization          | Indicador si la transacción fue tokenizada o no  | ✅     |                                                                             |
+| 23 | ProductType                 | Tipo de Producto                                 | ✅     |                                                                             |
+| 24 | ProductName                 | Clase de tarjeta                                 | ⚠️     | ProductName refiere al nombre del producto, no exactamente a la clase de    |
+|    |                             |                                                  |        | tarjeta. Verificar si corresponde o si falta un campo CardClass             |
+| 25 | MTI                         | MTI                                              | ✅     |                                                                             |
+| 26 | MerchantCountry             | MERCHANT_COUNTRY                                 | ✅     |                                                                             |
+| 27 | MerchantState               | MERCHANT_STATE                                   | ✅     |                                                                             |
+| 28 | MerchantCity                | MERCHANT_CITY                                    | ✅     |                                                                             |
+| 29 | MerchanAndress              | MERCHANT_ADRESS                                  | ✅     |                                                                             |
+| 30 | ARN                         | ARN                                              | ✅     |                                                                             |
+| 31 | TransactionDate             | PRESENTATION_DATE                                | ⚠️     | TransactionDate (fecha de la transacción) puede diferir de                  |
+|    |                             |                                                  |        | PRESENTATION_DATE (fecha de presentación/liquidación). Verificar semántica  |
+| 32 | TransactionSatus            | STATUS                                           | ✅     |                                                                             |
+| 33 | ProcessingCode              | PROCESSING_CODE                                  | ✅     |                                                                             |
+| 34 | CountryOrigin               | COUNTRY                                          | ✅     |                                                                             |
+| 35 | GeoState                    | STATE                                            | ✅     |                                                                             |
+| 36 | CityOrigin                  | CITY                                             | ✅     |                                                                             |
+| 37 | ZipCode                     | ZIPCODE                                          | ✅     |                                                                             |
+| 38 | ComunicationDeviceIndicator | ECI                                              | ✅     |                                                                             |
+| 39 | InstallmentQuantity         | INSTALLMENT_QUANTITY                             | ✅     |                                                                             |
+| 40 | SalePlanCode                | SALE_PLAN_CODE                                   | ✅     |                                                                             |
+| 41 | SalePlanName                | SALE_PLAN_NAME                                   | ✅     |                                                                             |
+| 42 | InterestRate                | INTEREST_RATE                                    | ✅     |                                                                             |
