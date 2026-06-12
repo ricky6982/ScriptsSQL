@@ -1,4 +1,5 @@
 GetTransactionsForDataDumpToReport - GetTransactionsForDataDump
+TYPE_NAME: DATA_DUMP_RPT_TRANSACTIONS
 | #  | Alias (Query)               | Campo Excel                                     | Tamaño | Estado | Comentario                                                                                                        |
 |----|-----------------------------|-------------------------------------------------|--------|--------|-------------------------------------------------------------------------------------------------------------------|
 | 1  | IdTransaction               | RETRIEVALREFNO                                  | 12     | ⚠️     | IdTransaction es ID interno del sistema, no equivale a un RRN estándar ISO                                        |
@@ -23,14 +24,14 @@ GetTransactionsForDataDumpToReport - GetTransactionsForDataDump
 | 20 | ApliedDCC                   | Indicador si la trx la aplico DCC               | 1      | ✅     |                                                                                                                   |
 | 21 | ApliedTokenization          | Indicador si la transacción fue tokenizada o no | 1      | ✅     |                                                                                                                   |
 | 22 | ProductType                 | Tipo de Producto                                | 7      | ✅     |                                                                                                                   |
-| 23 | ProductName                 | Clase de tarjeta                                | 60     | ⚠️      | ProductName refiere al nombre del producto, no exactamente a la clase de tarjeta. Verificar si corresponde        |
+| 23 | ProductName                 | Clase de tarjeta                                | 60     | ⚠️      |         |
 | 24 | MTI                         | MTI                                             | 5      | ✅     |                                                                                                                   |
 | 25 | MerchantCountry             | MERCHANT_COUNTRY                                | 3      | ✅     |                                                                                                                   |
 | 26 | MerchantState               | MERCHANT_STATE                                  | 2      | ✅     |                                                                                                                   |
 | 27 | MerchantCity                | MERCHANT_CITY                                   | 50     | ✅     |                                                                                                                   |
 | 28 | MerchanAndress              | MERCHANT_ADRESS                                 | 256    | ✅     |                                                                                                                   |
 | 29 | ARN                         | ARN                                             | 43     | ✅     |                                                                                                                   |
-| 30 | TransactionDate             | PRESENTATION_DATE                               | 6      | ⚠️      | TransactionDate (fecha de la transacción) puede diferir de PRESENTATION_DATE (fecha de presentación/liquidación)  |
+| 30 | PresentationDate            | PRESENTATION_DATE                               | 6      | ⚠️      | TransactionDate (fecha de la transacción) puede diferir de PRESENTATION_DATE (fecha de presentación/liquidación)  |
 | 31 | TransactionSatus            | STATUS                                          | 100    | ✅     |                                                                                                                   |
 | 32 | ProcessingCode              | PROCESSING_CODE                                 | 6      | ✅     |                                                                                                                   |
 | 33 | CountryOrigin               | COUNTRY                                         | 3      | ✅     |                                                                                                                   |
@@ -43,9 +44,9 @@ GetTransactionsForDataDumpToReport - GetTransactionsForDataDump
 | 40 | SalePlanCode                | SALE_PLAN_CODE                                  | 4      | ✅     |                                                                                                                   |
 | 41 | SalePlanName                | SALE_PLAN_NAME                                  | 23     | ✅     |                                                                                                                   |
 | 42 | InterestRate                | INTEREST_RATE                                   | 18     | ✅     |                                                                                                                   |
-| 43 | Exeption                    | Exeption                                        | 3      |        | Se tomo el valor 3 segun la tabla                                                                                 |
-| 44 | Transcode_Description       | Transcode_Description                           | 25     |        |                                                                                                                   |
-| 45 | SourceCode                  | SourceCode                                      | 2      |        |                                                                                                                   |
-| 46 | Product_Plan                | Product_Plan                                    | 12     |        |                                                                                                                   |
-| 47 | TransCode                   | TransCode                                       | 3      |        |                                                                                                                   |
+| 43 | Exception                   | Exception                                        | 3      |        | Se tomo el valor 3 segun la tabla                                                                                 |
+| 44 | TranscodeDescription        | Transcode_Description                           | 25     |        | Por ahora se deja en blanco hasta la definición                                                                   |
+| 45 | SourceCode                  | SourceCode                                      | 2      |        | Agregado segun especificación del layout                                                                          |
+| 46 | ProductPlan                 | Product_Plan                                    | 12     |        | Agregado segun la definición del layout                                                                      |
+| 47 | TransCode                   | TransCode                                       | 3      |        | Consultar si es valido is_financial                                                                               |
 
