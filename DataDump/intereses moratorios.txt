@@ -1,4 +1,5 @@
 GetPenaltyInteresForDataDumpToReport - GetPenaltyInterestForDataDump
+TYPE_NAME: DATA_DUMP_RPT_PENALTY_INTEREST
 | #  | Alias (Query)          | Campo Excel     | Tamaño | Estado | Comentario                                                         |
 |----|------------------------|-----------------|--------|--------|--------------------------------------------------------------------|
 | 1  | IdOperation            | RETRIEVALREFNO  | 12     | ⚠️      | Correspondencia dudosa: IdOperation es un ID interno de operación, |
