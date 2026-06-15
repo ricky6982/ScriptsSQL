@@ -1,4 +1,5 @@
 GetPaymentMediaForDataDumpToReport - GetPaymentMediaForDataDump
+TYPE_NAME: DATA_DUMP_RPT_PAYMENT_MEDIA
 | #  | Query                   | Excel                            | Tamaño | Estado | Comentario                               |
 |----|-------------------------|----------------------------------|--------|--------|------------------------------------------|
 | 1  | CardNumber              | NUMERO DE TARJETA                | 16     | ✅     |                                          |
@@ -17,16 +18,16 @@ GetPaymentMediaForDataDumpToReport - GetPaymentMediaForDataDump
 | 14 | ProductGroupCode        | GRUPO DE PRODUCTO                | 4      | ✅     |                                          |
 | 15 | TrackingID              | TRACKING ID                      | 12     | ✅     |                                          |
 | 16 | PaymentMediaStatusType  | TIPO DE ESTADO DE LA TARJETA     | 1      | ✅     |                                          |
-| 17 | EmbossingName           | NOMBRE DE EMBOZADO               | 40     | ❌     | CORREGIDO                                |
-| 18 | Scheme                  | Scheme                           | 2      |        |                                          |
+| 17 | EmbossingName           | NOMBRE DE EMBOZADO               | 40     | ❌     | agregado                                 |
+| 18 | Scheme                  | Scheme                           | 2      |        | agregado                                 |
 | 19 | CardTechnology          | CardTechnology                   | 25     |        |                                          |
-| 20 | SDP                     | SDP                              | 25     |        |                                          |
-| 21 | BlockStatusCode         | BlockStatusCode                  | 2      |        |                                          |
-| 22 | BlockCategoryCode       | BlockCategoryCode                | 2      |        |                                          |
-| 23 | Bin                     | Bin                              | 25     |        |                                          |
-| 24 | ICA                     | ICA                              | 25     |        |                                          |
-| 25 | ChipSequence            | ChipSequence                     | 4      |        |                                          |
-| 26 | EmisionTime             | EmisionTime                      | 6      |        |                                          |
-| 27 | PreviusDueDate          | PreviusDueDate                   | 8      |        |                                          |
-| 28 | ActionTaken             | ActionTaken                      | 50     |        |                                          |
+| 20 | SDP                     | SDP                              | 25     |        | FALTA                                    |
+| 21 | BlockStatusCode         | BlockStatusCode                  | 2      |        | AGREGADO                                 |
+| 22 | BlockCategoryCode       | BlockCategoryCode                | 2      |        | AGREGADO                                 |
+| 23 | Bin                     | Bin                              | 25     |        | AGREGADO                                 |
+| 24 | ICA                     | ICA                              | 25     |        | FALTA                                    |
+| 25 | ChipSequence            | ChipSequence                     | 4      |        | FALTA
+| 26 | EmisionTime             | EmisionTime                      | 6      |        | Revisar, los datos se tomaron del attendance_request, VEFIFICAR FORMATO |
+| 27 | PreviusDueDate          | PreviusDueDate                   | 8      |        | Revisar, los datos se tomaron del attendance_request verificar que no dupliquen filas|
+| 28 | ActionTaken             | ActionTaken                      | 50     |        | Revisar, los datos se tomaron del attendance_request |
 
