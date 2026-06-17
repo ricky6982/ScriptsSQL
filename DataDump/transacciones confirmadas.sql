@@ -149,15 +149,15 @@ select
             THEN itx.TRM_REVENUE -- Usas directamente la columna almacenada
         ELSE NULL
         END AS TrmRevenue,
-    '' TranscodeDescription,
+    ' ' as TranscodeDescription,
     CASE
         WHEN O.OPERATION_ENTRY_CHANNEL = 1 THEN 0        -- Local input (online)
         WHEN O.OPERATION_ENTRY_CHANNEL IN (2, 4) THEN 1  -- System-generated
         WHEN O.OPERATION_ENTRY_CHANNEL = 3 THEN 2        -- User input
-        END as SourceCode,
+        ELSE NULL
+    END as SourceCode,
     r.RATE_CODE ProductPlan,
-    M.MOVEMENT_TYPE as TransCode
-
+    M.TRANS_CODE as TransCode
 FROM
     ITX_TRANSACTION itx
         INNER JOIN (
@@ -184,6 +184,7 @@ FROM
         LEFT JOIN TGD_CURRENCY issuerCurr ON issuerCurr.ID_CURRENCY = itx.ID_ISSUER_CURRENCY
         LEFT JOIN AUI_TRX_ISSUER_DATA info ON info.ID_TRANSACTION = aot.ID_TRANSACTION
         LEFT JOIN IBC_SALE_PLAN pln ON pln.ID_SALE_PLAN = itx.ID_SALE_PLAN
+        LEFT JOIN IBC_RATE R ON R.ID_RATE = pln.ID_RATE
         LEFT JOIN AUI_RATE_VALUE rtvle ON rtvle.ID_RATE = pln.ID_RATE
         AND rtvle.VALID_FROM =(
             SELECT MAX(VALID_FROM )  FROM AUI_RATE_VALUE
@@ -192,7 +193,5 @@ FROM
         LEFT OUTER JOIN TGD_GEO_STATE state ON state.ID_COUNTRY = itx.ID_COUNTRY AND state.ISO_CODE = itx.MERCHANT_PROVINCE_CODE
         LEFT JOIN IOP_OPERATION O ON O.ID_OPERATION = itx.ID_OPERATION
         LEFT JOIN IFN_MOVEMENT M ON M.ID_OPERATION = O.ID_OPERATION AND M.IS_FINANCIAL = 1
-        INNER JOIN IBC_ISSUER_PRODUCT IP ON IP.ID_PRODUCT = prod.ID_PRODUCT
-        INNER JOIN IBC_SALE_PLAN SP ON IP.ID_PRODUCT = SP.ID_PRODUCT
-        INNER JOIN IBC_RATE R ON R.ID_RATE = SP.ID_RATE
+        LEFT JOIN IBC_ISSUER_PRODUCT IP ON IP.ID_PRODUCT = prod.ID_PRODUCT
 WHERE itx.ID_ISSUER = :IdIssuer

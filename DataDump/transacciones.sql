@@ -110,15 +110,16 @@ SELECT
     CAST(sale.SALE_PLAN_CODE AS VARCHAR(10)) SalePlanCode,
     sale.SALE_PLAN_NAME SalePlanName,
     rtevle.VALUE InterestRate,
-    '' Exception,
-    '' TranscodeDescription,
+    '' Exception, -- Por ahora se deja en blanco hasta la definición
+    '' TranscodeDescription, -- Por ahora se deja en blanco hasta la definición
     CASE
         WHEN O.OPERATION_ENTRY_CHANNEL = 1 THEN 0        -- Local input (online)
         WHEN O.OPERATION_ENTRY_CHANNEL IN (2, 4) THEN 1  -- System-generated
         WHEN O.OPERATION_ENTRY_CHANNEL = 3 THEN 2        -- User input
-        END as SourceCode,
+        ELSE NULL
+    END as SourceCode,
     r.RATE_CODE ProductPlan,
-    M.MOVEMENT_TYPE as TransCode
+    M.TRANS_CODE as TransCode
 FROM
     AU_OPEN_TRANSACTION op
         INNER JOIN AUI_TRX_ISSUER_DATA info ON info.ID_TRANSACTION = op.ID_TRANSACTION
@@ -132,6 +133,7 @@ FROM
             SELECT MAX(ID_TX) FROM ITX_TRANSACTION WHERE EXTERNAL_AUTHORIZATION_ID = op.ID_TRANSACTION
         )
         LEFT JOIN IBC_SALE_PLAN sale ON sale.ID_SALE_PLAN = info.ID_SALE_PLAN
+        LEFT JOIN IBC_RATE R ON R.ID_RATE = sale.ID_RATE
         LEFT JOIN AUI_RATE_VALUE rtevle ON rtevle.ID_RATE = sale.ID_RATE
         AND rtevle.VALID_FROM =(
             SELECT MAX(VALID_FROM )  FROM AUI_RATE_VALUE
@@ -140,9 +142,6 @@ FROM
         LEFT OUTER JOIN TGD_GEO_STATE state ON state.ID_COUNTRY = tx.ID_COUNTRY AND state.ISO_CODE = tx.MERCHANT_PROVINCE_CODE
         LEFT JOIN IOP_OPERATION O ON O.ID_OPERATION = tx.ID_OPERATION
         LEFT JOIN IFN_MOVEMENT M ON M.ID_OPERATION = O.ID_OPERATION AND M.IS_FINANCIAL = 1
-        INNER JOIN IBC_ISSUER_PRODUCT IP ON IP.ID_PRODUCT = prod.ID_PRODUCT
-        INNER JOIN IBC_SALE_PLAN SP ON IP.ID_PRODUCT = SP.ID_PRODUCT
-        INNER JOIN IBC_RATE R ON R.ID_RATE = SP.ID_RATE
 WHERE info.ID_ISSUER = :IdIssuer
   AND CAST(op.TRANSACTION_DATE AS DATE) = :FilterDate
 
