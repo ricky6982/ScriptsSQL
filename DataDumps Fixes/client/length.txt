@@ -1,0 +1,41 @@
+﻿Documento	20
+Nombre 	10
+Apellido	20
+Fecha de Nacimiento	8
+Estado Civil	10
+Calle	256
+Número exterior	10
+Número interior	5
+Entre calles	512
+Colonia	256
+Cód. Colonia	7
+Ciudad	256
+Cód. Ciudad	5
+Estado	64
+Cód. Estado	5
+Código Postal	5
+Teléfono móvil	11
+Teléfono particular	11
+Correo electrónico	64
+Tipo Calle	5
+Es bis	1
+Piso	5
+Aparamento	20
+Información adicional	500
+Tipo de Documento
+Descripción de tipo de documnento	30
+F. Emisión	8
+F. Vencimento	8
+Tipo Documento Secundario
+Descripción Tipo Documento Secundario	30
+Documento secundario	30
+Nombre Embozado	60
+Primer Apellido	60
+Segundo Apellido	60
+Primer Nombre	60
+Segundo Nombre	60
+Edad	3
+Lugar Nacimiento	40
+Nacionalidad	4
+Sexo	1
+Cantidad Hijos	5

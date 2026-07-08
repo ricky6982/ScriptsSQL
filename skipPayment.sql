@@ -1,0 +1,25 @@
+﻿INSERT INTO TRD_SYSTEM_SERVICE VALUES ('IAccount','SkipPaymentMassive',0);
+
+INSERT INTO TRD_SERVICE_PERM VALUES('IAccount','SkipPaymentMassive',1,1,3);
+
+INSERT INTO TVM_USE_CASE VALUES('ICSU077_SkipPaymentMassive','IAccount','SkipPaymentMassive','Setear Skip Payment',3,1,'ICS');
+
+INSERT INTO TVM_USE_CASE_PLATFORM VALUES(1,'ICSU077_SkipPaymentMassive');
+
+INSERT INTO TVM_MENU_ITEM
+VALUES (
+           1,
+           (SELECT MAX(ID_MENU_ITEM) +1 FROM TVM_MENU_ITEM),
+           'ICS',
+           2,
+           (SELECT MAX(MENU_ITEM_ORDER)+1 FROM TVM_MENU_ITEM
+            WHERE ID_FATHER_MI = (SELECT ID_MENU_ITEM FROM TVM_MENU_ITEM WHERE RESOURCE_KEY = 'CUSTOMER_KEY')),
+           'ICSU077_SkipPaymentMassive',
+           (SELECT ID_MENU_ITEM FROM TVM_MENU_ITEM WHERE RESOURCE_KEY = 'CUSTOMER_KEY'),
+           NULL,
+           0
+       );
+
+UPDATE TVM_MENU_ITEM
+SET ID_MODULE = 'ICS'
+WHERE ID_USE_CASE = 'ICSU077_SkipPaymentMassive';

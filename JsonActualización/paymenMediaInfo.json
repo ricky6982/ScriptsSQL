@@ -1,0 +1,40 @@
+﻿[
+  {
+    "PaymentMedia": {
+      "IdPaymentMedia": 1,
+      "IdMediaSupport": 1,
+      "IdMediaSupportStatus": 0,
+      "IdPaymentMediaStatus": 26,
+      "StatusCode": "0002",
+      "IdIssuer": 641,
+      "IdProduct": 2,
+      "PaymentMediaSequenceNumber": 1,
+      "GenerationInstance": 1,
+      "CardNumber": "1000000508636753",
+      "CardSequenceNumber": 1,
+      "DueDate": "2030-10-01T00:00:00",
+      "TransactionMaskedPan": "************6753",
+      "CardNumberToken": null,
+      "TransactionBin": null,
+      "ExternalIssuerId": "410",
+      "FullDueDate": "2030-10-31T00:00:00",
+      "IdAffinityGroup": 2,
+      "MediaSupportType": 0,
+      "HasInsurance": false,
+      "CardNumberStockId": null,
+      "idBrand": 0,
+      "IdGeneralAccount": 0,
+      "IdCustomer": 0,
+      "StatusType": 2,
+      "StatusDescription": null
+    },
+    "IdAccountRelation": 1,
+    "IdDocumentType": 1,
+    "DocumentNumber": "202605051",
+    "IsAgileDelivery": false,
+    "IdCustomer": 0,
+    "EmbossingName": "TEST TEST",
+    "FinancialRelationType": 1,
+    "PaymentMediaStatusDescription": "Bloqueo inicial"
+  }
+]

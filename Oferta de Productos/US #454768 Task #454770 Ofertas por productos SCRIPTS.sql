@@ -1,0 +1,114 @@
+﻿--------
+-- SQL
+--------
+
+-- 1) Registro los servicios del batch
+INSERT INTO TRD_SYSTEM_SERVICE
+SELECT 'IRestoreDefaultSettlementModelBatch', 'PreRestoreDefaultSettlementModel', 0
+WHERE NOT EXISTS (SELECT 1 FROM TRD_SYSTEM_SERVICE WHERE INTERFACE_NAME = 'IRestoreDefaultSettlementModelBatch' AND OPERATION_NAME = 'PreRestoreDefaultSettlementModel');
+
+INSERT INTO TRD_SYSTEM_SERVICE SELECT 'IRestoreDefaultSettlementModelBatch', 'RestoreDefaultSettlementModel', 0
+WHERE NOT EXISTS (SELECT 1 FROM TRD_SYSTEM_SERVICE WHERE INTERFACE_NAME = 'IRestoreDefaultSettlementModelBatch' AND OPERATION_NAME = 'RestoreDefaultSettlementModel');
+
+INSERT INTO TRD_SYSTEM_SERVICE
+SELECT 'IRestoreDefaultSettlementModelBatch', 'PostRestoreDefaultSettlementModel', 0
+WHERE NOT EXISTS (SELECT 1 FROM TRD_SYSTEM_SERVICE WHERE INTERFACE_NAME = 'IRestoreDefaultSettlementModelBatch' AND OPERATION_NAME = 'PostRestoreDefaultSettlementModel');
+
+-- 2) Permisos para todos los roles
+INSERT INTO TRD_SERVICE_PERM (INTERFACE_NAME, OPERATION_NAME, PERMISSION, ID_ROLE, ID_PLATFORM)
+SELECT 'IRestoreDefaultSettlementModelBatch', 'PreRestoreDefaultSettlementModel',  3, 1, 1
+WHERE NOT EXISTS (SELECT 1 FROM TRD_SERVICE_PERM WHERE INTERFACE_NAME = 'IRestoreDefaultSettlementModelBatch' AND OPERATION_NAME = 'PreRestoreDefaultSettlementModel');
+
+INSERT INTO TRD_SERVICE_PERM (INTERFACE_NAME, OPERATION_NAME, PERMISSION, ID_ROLE, ID_PLATFORM)
+SELECT 'IRestoreDefaultSettlementModelBatch', 'RestoreDefaultSettlementModel', 3, 1, 1
+WHERE NOT EXISTS (SELECT 1 FROM TRD_SERVICE_PERM WHERE INTERFACE_NAME = 'IRestoreDefaultSettlementModelBatch' AND OPERATION_NAME = 'RestoreDefaultSettlementModel');
+
+INSERT INTO TRD_SERVICE_PERM (INTERFACE_NAME, OPERATION_NAME, PERMISSION, ID_ROLE, ID_PLATFORM)
+SELECT 'IRestoreDefaultSettlementModelBatch', 'PostRestoreDefaultSettlementModel', 3, 1, 1
+WHERE NOT EXISTS (SELECT 1 FROM TRD_SERVICE_PERM WHERE INTERFACE_NAME = 'IRestoreDefaultSettlementModelBatch' AND OPERATION_NAME = 'PostRestoreDefaultSettlementModel');
+
+-- 3) Registro operación en TBE_PROCESS
+INSERT INTO TBE_PROCESS (INTERFACE_NAME, OPERATION_NAME, ID_PLATFORM, REQUIRE_TOKENIZE)
+SELECT 'IRestoreDefaultSettlementModelBatch', 'RestoreDefaultSettlementModel', 1, 0
+WHERE NOT EXISTS (SELECT 1 FROM TBE_PROCESS WHERE INTERFACE_NAME = 'IRestoreDefaultSettlementModelBatch' AND OPERATION_NAME = 'RestoreDefaultSettlementModel');
+
+-- 4) Registro proceso batch
+INSERT INTO TBE_BATCH_PROCESS (PROCESS_NAME, DESCRIPTION, ID_PROCESS)
+SELECT
+    'RestoreDefaultSettlementModel',
+    'Batch para restaurar el modelo de liquidación por defecto cuando una oferta de producto caduca según la fecha de fin de la oferta de producto',
+    (SELECT MAX(ID_PROCESS) FROM TBE_PROCESS)
+WHERE NOT EXISTS (SELECT 1 FROM TBE_BATCH_PROCESS WHERE PROCESS_NAME = 'RestoreDefaultSettlementModel');
+
+-- 5) Asocio
+INSERT INTO C_BATCH_PROCESS_ORG_TYPE (ORGANIZATION_TYPE, ID_BATCH_PROCESS)
+VALUES (2, (SELECT ID_BATCH_PROCESS FROM TBE_BATCH_PROCESS WHERE PROCESS_NAME = 'RestoreDefaultSettlementModel'));
+
+-- 6) Agrego al grupo de ejecución del batch
+INSERT INTO TBE_BATCH_PROCESS_GROUP (ID_BATCH_PROCESS,ID_GROUP,ID_PLATFORM,GROUP_ORDER)
+SELECT DISTINCT
+    (SELECT ID_BATCH_PROCESS FROM TBE_BATCH_PROCESS WHERE PROCESS_NAME = 'RestoreDefaultSettlementModel'),
+    BOG.ID_GROUP,
+    1,
+    (SELECT ISNULL(MAX(GROUP_ORDER),0) + 1 FROM TBE_BATCH_PROCESS_GROUP WHERE ID_GROUP = BOG.ID_GROUP)
+FROM TBE_BATCH_GROUP TBG
+         INNER JOIN C_BATCH_ORG_GROUP BOG ON TBG.ID_GROUP = BOG.ID_GROUP
+WHERE GROUP_NAME='Cuenta Cliente Emisor                                       ';
+
+select * from TBE_BATCH_GROUP;
+SELECT ISNULL(MAX(GROUP_ORDER),0) + 1 FROM TBE_BATCH_PROCESS_GROUP;
+SELECT * FROM TBE_BATCH_PROCESS_GROUP;
+SELECT * FROM C_BATCH_PROCESS_ORG_TYPE;
+SELECT ORGANIZATION_TYPE, count(ID_BATCH_PROCESS) FROM C_BATCH_PROCESS_ORG_TYPE group by ORGANIZATION_TYPE;
+
+-------------------------
+-- ROLLBACK
+-------------------------
+
+DELETE FROM TBE_BATCH_PROCESS_GROUP
+WHERE ID_BATCH_PROCESS IN (
+    SELECT ID_BATCH_PROCESS
+    FROM TBE_BATCH_PROCESS
+    WHERE PROCESS_NAME = 'RestoreDefaultSettlementModel'
+);
+
+DELETE FROM C_BATCH_PROCESS_ORG_TYPE
+WHERE ID_BATCH_PROCESS IN (
+    SELECT ID_BATCH_PROCESS
+    FROM TBE_BATCH_PROCESS
+    WHERE PROCESS_NAME = 'RestoreDefaultSettlementModel'
+);
+
+DELETE FROM TBE_BATCH_PROCESS WHERE PROCESS_NAME = 'RestoreDefaultSettlementModel';
+
+DELETE FROM TBE_PROCESS WHERE INTERFACE_NAME = 'IRestoreDefaultSettlementModelBatch';
+
+DELETE FROM TRD_SERVICE_PERM WHERE INTERFACE_NAME = 'IRestoreDefaultSettlementModelBatch';
+
+DELETE FROM TRD_SYSTEM_SERVICE WHERE INTERFACE_NAME = 'IRestoreDefaultSettlementModelBatch';
+
+-----------
+SELECT * FROM TBE_BATCH_PROCESS_GROUP
+WHERE ID_BATCH_PROCESS IN (
+    SELECT ID_BATCH_PROCESS
+    FROM TBE_BATCH_PROCESS
+    WHERE PROCESS_NAME = 'RestoreDefaultSettlementModel'
+);
+
+SELECT * FROM C_BATCH_PROCESS_ORG_TYPE
+WHERE ID_BATCH_PROCESS IN (
+    SELECT ID_BATCH_PROCESS
+    FROM TBE_BATCH_PROCESS
+    WHERE PROCESS_NAME = 'RestoreDefaultSettlementModel'
+);
+
+SELECT * FROM TBE_BATCH_PROCESS WHERE PROCESS_NAME = 'RestoreDefaultSettlementModel';
+
+SELECT * FROM TBE_PROCESS WHERE INTERFACE_NAME = 'IRestoreDefaultSettlementModelBatch';
+
+SELECT * FROM TRD_SERVICE_PERM WHERE INTERFACE_NAME = 'IRestoreDefaultSettlementModelBatch';
+
+SELECT * FROM TRD_SYSTEM_SERVICE WHERE INTERFACE_NAME = 'IRestoreDefaultSettlementModelBatch';
+
+SELECT * FROM DATABASECHANGELOG WHERE AUTHOR = 'rsarapura';
+

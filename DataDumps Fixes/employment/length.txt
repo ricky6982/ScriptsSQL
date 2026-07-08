@@ -1,0 +1,36 @@
+﻿Tipo Documento
+Descripción de tipo de documnento
+Documento	20
+Actividad	5
+Tipo de Actividad	4
+Código de Ocupación/Profesión	9
+Empleador	200
+Actividad económica del empleador	9
+Cargo	200
+Tipo de documento laboral	2
+Descripción de tipo de documnento
+Documento Laboral	20
+Fecha de ingreso	8
+Contratado	1
+Fecha de vencimiento de contrato	8
+Moneda de ingresos	5
+Ingreso líquido	19
+Ingreso nominal	19
+Persona políticamente expuesta	1
+Estado	64
+Cód. Estado	5
+Ciudad	256
+Cód. Ciudad	5
+Colonia	256
+Cód. Colonia	7
+Código Postal	5
+Tipo Calle
+Calle	256
+Número exterior	10
+Es bis	1
+Piso	20
+Apartamento	20
+Información adicional
+Teléfono móvil	11
+Teléfono particular	11
+Email laboral

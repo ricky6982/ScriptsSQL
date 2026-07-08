@@ -60,27 +60,27 @@ IF NOT EXISTS (
 )
     BEGIN
         CREATE TABLE ICS_ACCOUNT_RELATION_PARAMETER
-        (
-            ID_PARAMETER        int            NOT NULL,
-            ID_ACCOUNT_RELATION int            NOT NULL,
-            VALID_FROM          datetime       NOT NULL,
-            VALID_TO            datetime       NULL,
-            DATE_VALUE          datetime       NULL,
-            STRING_VALUE        nvarchar(400)  NULL,
-            REAL_VALUE          decimal(18, 6) NULL,
-            INTEGER_VALUE       bigint         NULL,
+          (
+              ID_PARAMETER        int            NOT NULL,
+              ID_ACCOUNT_RELATION int            NOT NULL,
+              VALID_FROM          datetime       NOT NULL,
+              VALID_TO            datetime       NULL,
+              DATE_VALUE          datetime       NULL,
+              STRING_VALUE        nvarchar(400)  NULL,
+              REAL_VALUE          decimal(18, 6) NULL,
+              INTEGER_VALUE       bigint         NULL,
 
-            CONSTRAINT PK_ICS_ACCOUNT_RELATION_PARAMETER
-                PRIMARY KEY (ID_PARAMETER, ID_ACCOUNT_RELATION, VALID_FROM),
+              CONSTRAINT PK_ICS_ACCOUNT_RELATION_PARAMETER
+                  PRIMARY KEY (ID_PARAMETER, ID_ACCOUNT_RELATION, VALID_FROM),
 
-            CONSTRAINT FK_ICS_ACC_REL_PARAM_PARAMETER
-                FOREIGN KEY (ID_PARAMETER)
-                    REFERENCES C_PARAMETER (ID_PARAMETER),
+              CONSTRAINT FK_ICS_ACC_REL_PARAM_PARAMETER
+                  FOREIGN KEY (ID_PARAMETER)
+                      REFERENCES C_PARAMETER (ID_PARAMETER),
 
-            CONSTRAINT FK_ICS_ACC_REL_PARAM_ACCOUNT_REL
-                FOREIGN KEY (ID_ACCOUNT_RELATION)
-                    REFERENCES ICS_ACCOUNT_RELATION (ID_ACCOUNT_RELATION)
-        );
+              CONSTRAINT FK_ICS_ACC_REL_PARAM_ACCOUNT_REL
+                  FOREIGN KEY (ID_ACCOUNT_RELATION)
+                      REFERENCES ICS_ACCOUNT_RELATION (ID_ACCOUNT_RELATION)
+          );
     END;
 
 -- Tabla de históricos
