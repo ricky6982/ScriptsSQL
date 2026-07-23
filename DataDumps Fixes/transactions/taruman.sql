@@ -1,0 +1,79 @@
+﻿SELECT
+    op.ID_TRANSACTION IdTransaction,
+    acc.INTERNAL_ACCOUNT_NUMBER InternalAccountNumber,
+    op.MCC_CODE MCC,
+    op.ID_RESPONSE_CODE	ResponseCode,
+    op.TRANSACTION_TYPE TransactionType,
+    op.LOCAL_DATE DateLocal,
+    op.TRANSACTION_BEGIN_TIME TimeLocal,
+    CAST(COALESCE(op.MESSAGE_AMNT, NULL) AS DECIMAL(18, 2)) SaleAmount,
+    op.MESSAGE_CURRENCY_CODE SaleCurrency,
+    op.TRANSACTION_PAN CardNumber,
+    CAST(COALESCE(op.CARD_BILLING_AMNT, NULL) AS DECIMAL(18, 2)) CardBillingAmount,
+    op.CARD_BILLING_CURRENCY_CODE CardBillingCurrency,
+    CAST(COALESCE(info.CARD_BILLING_CONVERSION_RATE, NULL) AS DECIMAL(18, 4)) Convertion,
+    op.AUTHORIZATION_CODE AuthCode,
+    op.CARD_ACCEPTOR_TERMINAL_CODE TerminalID,
+    op.CARD_ACCEPTOR_CODE MerchantID,
+    REPLACE(REPLACE(COALESCE(op.CARD_ACCEPTOR_NAME, ''), ',', ''), ';', '') AS MerchantName,
+    op.POS_ENTRY_MODE EntryMode,
+    rc.DESCRIPTION ResponseDescription,
+    CASE WHEN op.CARD_BILLING_AMNT > 0 THEN '1' ELSE '0' END isFinancial,
+    CASE WHEN info.DCC IS NULL THEN '0' ELSE '1' END ApliedDCC,
+    CASE WHEN (SELECT COUNT(ID_TRANSACTION) FROM AUI_OPEN_TOKENIZATION WHERE ID_TRANSACTION = op.ID_TRANSACTION) > 0 THEN '1' ELSE '0' END ApliedTokenization,
+    prod.PRODUCT_TYPE ProductType,
+    prod.PRODUCT_NAME ProductName,
+    op.MTI_CODE MTI,
+    tx.MERCHANT_COUNTRY_CODE MerchantCountry,
+    state.ID_GEO_STATE MerchantState,
+    tx.MERCHANT_CITY MerchantCity,
+    tx.MERCHANT_ADDRESS MerchanAndress,
+    tx.ARN ARN,
+    op.TRANSACTION_DATE TransactionDate,
+    ts.DESCRIPTION TransactionSatus,
+    op.PROCESSING_CODE ProcessingCode,
+    op.TRANSACTION_COUNTRY_CODE CountryOrigin,
+    op.TRANSACTION_GEO_STATE_NAME GeoState,
+    op.TRANSACTION_CITY_NAME CityOrigin,
+    tx.MERCHANT_ZIP_CODE ZipCode,
+    op.ECOMMERCE_INDICATORS ComunicationDeviceIndicator,
+    sale.INSTALLMENT_QUANTITY InstallmentQuantity,
+    CAST(sale.SALE_PLAN_CODE AS VARCHAR(10)) SalePlanCode,
+    sale.SALE_PLAN_NAME SalePlanName,
+    rtevle.VALUE InterestRate,
+    '' Exception, -- Por ahora se deja en blanco hasta la definición
+    '' TranscodeDescription, -- Por ahora se deja en blanco hasta la definición
+    CASE
+        WHEN O.OPERATION_ENTRY_CHANNEL = 1 THEN 0        -- Local input (online)
+        WHEN O.OPERATION_ENTRY_CHANNEL IN (2, 4) THEN 1  -- System-generated
+        WHEN O.OPERATION_ENTRY_CHANNEL = 3 THEN 2        -- User input
+        ELSE NULL
+        END as SourceCode,
+    r.RATE_CODE ProductPlan,
+    M.TRANS_CODE as TransCode,
+    issuerProduct.EXTERNAL_ISSUER_ID ProductCode
+FROM
+    AU_OPEN_TRANSACTION op
+        INNER JOIN AUI_TRX_ISSUER_DATA info ON info.ID_TRANSACTION = op.ID_TRANSACTION
+        INNER JOIN AUI_GENERAL_ACCOUNT acc ON acc.ID_GENERAL_ACCOUNT = info.ID_GENERAL_ACCOUNT
+        INNER JOIN AUI_PAYMENT_MEDIA pmedia on pmedia.ID_PAYMENT_MEDIA= info.ID_PAYMENT_MEDIA
+        INNER JOIN IBC_PRODUCT prod on prod.ID_PRODUCT = pmedia.ID_PRODUCT
+        INNER JOIN IBC_ISSUER_PRODUCT issuerProduct ON issuerProduct.ID_PRODUCT = prod.ID_PRODUCT
+        INNER JOIN C_BRAND_PRODUCT_CATEGORY cbpc on cbpc.ID_BRAND_PRODUCT_CATEGORY = prod.ID_BRAND_PRODUCT_CATEGORY
+        INNER JOIN AU_RESPONSE_CODE rc on rc.ID_RESPONSE_CODE = op.ID_RESPONSE_CODE
+        INNER JOIN AU_TRANSACTION_STATUS ts ON ts.ID_TRANSACTION_STATUS = op.ID_TRANSACTION_STATUS
+        LEFT  JOIN ITX_TRANSACTION tx on op.ID_TRANSACTION = tx.EXTERNAL_AUTHORIZATION_ID AND tx.ID_TX =(
+        SELECT MAX(ID_TX) FROM ITX_TRANSACTION WHERE EXTERNAL_AUTHORIZATION_ID = op.ID_TRANSACTION
+    )
+        LEFT JOIN IBC_SALE_PLAN sale ON sale.ID_SALE_PLAN = info.ID_SALE_PLAN
+        LEFT JOIN IBC_RATE R ON R.ID_RATE = sale.ID_RATE
+        LEFT JOIN AUI_RATE_VALUE rtevle ON rtevle.ID_RATE = sale.ID_RATE
+        AND rtevle.VALID_FROM =(
+            SELECT MAX(VALID_FROM )  FROM AUI_RATE_VALUE
+            WHERE ID_RATE = sale.ID_RATE AND VALID_FROM <= CAST(op.TRANSACTION_DATE AS DATE)
+        )
+        LEFT OUTER JOIN TGD_GEO_STATE state ON state.ID_COUNTRY = tx.ID_COUNTRY AND state.ISO_CODE = tx.MERCHANT_PROVINCE_CODE
+        LEFT JOIN IOP_OPERATION O ON O.ID_OPERATION = tx.ID_OPERATION
+        LEFT JOIN IFN_MOVEMENT M ON M.ID_OPERATION = O.ID_OPERATION AND M.IS_FINANCIAL = 1
+WHERE info.ID_ISSUER = :IdIssuer
+  AND CAST(op.TRANSACTION_DATE AS DATE) = :FilterDate
