@@ -11,7 +11,6 @@ namespace PS.IssuerTransaction.Interface.Datatypes.DataDump
     [Serializable]
     public class ConfirmedTransactionsForDataDumpDTO
     {
-        public string IdTransaction { get; set; }
         [CsvOrder(1)]
         public string RetrievalRefno { get; set; }
         [CsvOrder(2)]
@@ -119,9 +118,8 @@ namespace PS.IssuerTransaction.Interface.Datatypes.DataDump
 
         public ConfirmedTransactionsForDataDumpDTO(GetConfirmedTransactionsForDataDumpOutputDTO item)
         {
-            IdTransaction = item.IdTx.ToString();
+            RetrievalRefno = item.IdTx.ToString();
             InternalAccountNumber = item.InternalAccountNumber ?? string.Empty;
-            RetrievalRefno = string.Empty; // Falta definición
             MerchantCategory = item.MerchantCategory.HasValue ? item.MerchantCategory.Value.ToString() : String.Empty;
             ResponseCode = item.ResponseCode != null ? item.ResponseCode.Trim() : String.Empty;
             TransactionType = ((short)item.TransactionType).ToString();
@@ -164,7 +162,7 @@ namespace PS.IssuerTransaction.Interface.Datatypes.DataDump
             SettlementAmount = item.SettlementAmount.HasValue ? item.SettlementAmount.Value.ToString() : String.Empty;
             SettlementCurrencyCode = item.SettlementCurrencyCode.HasValue ? item.SettlementCurrencyCode.Value.ToString() : String.Empty;
             ComunicationDeviceIndicator = item.ComunicationDeviceIndicator ?? string.Empty;
-            Eci = string.Empty; // Falta definición
+            Eci = item.ComunicationDeviceIndicator ?? string.Empty;
             InstallmentQuantity = item.InstallmentQuantity.ToString();
             SalePlanCode = item.SalePlanCode ?? string.Empty;
             SalePlanName = item.SalePlanName ?? string.Empty;

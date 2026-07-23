@@ -1,0 +1,85 @@
+﻿SELECT
+    gralAcc.INTERNAL_ACCOUNT_NUMBER InternalAccountNumber,
+    customer.DOCUMENT Document,
+    gralAcc.EXTERNAL_ACCOUNT_NUMBER ExternalAcoountNumber,
+    accStatus.STATUS_CODE StatusCode,
+    accStatus.DESCRIPTION StatusDescription,
+    accProperty.CREATION_DATE IssueDate,
+    (SELECT MAX(CHANGE_BUSINESS_DATE) FROM  ICS_GENERAL_ACCOUNT_STATUS_H WHERE ID_ACCOUNT_STATUS_NEW in ( SELECT ID_ACCOUNT_STATUS FROM IBC_ACCOUNT_STATUS where STATUS_TYPE in (4) AND ID_ISSUER = :IdIssuer) AND ID_GENERAL_ACCOUNT = gralAcc.ID_GENERAL_ACCOUNT) InactiveDate,
+    CAST(COALESCE(creditAcc.CREDIT_LIMIT, 0)  AS DECIMAL(18, 2))  CreditLimit,
+    CAST(COALESCE(debitAcc.AVAILABLE_AMOUNT, creditAcc.CREDIT_LIMIT, 0) + COALESCE(creditAcc.PENDING_PAYMENT_AMOUNT, 0) - COALESCE(creditAcc.USED_AMOUNT, prepraidAcc.AVAILABLE_AMOUNT, 0)  AS DECIMAL(18, 2)) BalanceAmount,
+    customer.ID_DOCUMENT_TYPE DocumentType,
+    docType.DESCRIPTION DocTypeDescription,
+    accStatus.STATUS_TYPE AccountStatusType,
+    gralAcc.APPLY_PROMOTIONS ArePromotionsEnabled,
+    gralAcc.APPLY_CAMPAIGNS AreCampaignsEnabled,
+    CASE WHEN gralAcc.SEND_ACCOUNT_STATEMENT = 1 THEN 1 ELSE 0 END  SendAccountStatement,
+    finRelMain.SEND_STATEMENT_BY_EMAIL SendStatementByEmail,
+    finRelMain.SEND_STATEMENT_BY_CELL SendStatementByCell,
+    STATEMENTINFO.StatementEmail StatementEmail,
+    CONCAT(STATEMENTINFO.StatementPhoneCountry,STATEMENTINFO.StatementAreaCode,STATEMENTINFO.StatementPhone) StatementCellPhone,
+    '' as BranchCode,
+    '' as CashWithdrawalEnabled,
+    '' as AdvancedPaymentMode,
+    creditGrlAcc.ID_ACCOUNT_DEBT_CONTROL BlockStatusCode,
+    blockCondition.MATRIX_CONDITION_CODE  BlockCategoryCode,
+    accStatus.ORIGIN ChargeOffStatus,
+    CAST(COALESCE(balanceInfo.PURCHASE_TOTAL, 0) + COALESCE(balanceInfo.INTEREST_TOTAL, 0) + COALESCE(balanceInfo.PENALTY_TOTAL, 0) AS DECIMAL(18, 2))  ChargeOffAmount,
+    accProperty.PENALTY_DAYS AS Deliquency,
+    '' AS FinRev,
+    accDebControl.RISK_CODE RiskCode,
+    balance.LOCAL_BALANCE_AMOUNT CurrentBalance,
+    'N1' CreditClass,
+    calendar.STATEMENT_GENERATION_DATE LastAccStatmentDate,
+    accDebControl.ACCOUNT_DUE_CODE AccountDueCode,
+    balanceInfo.PENALTY_TOTAL CurrentDueAmount,
+    calendar.CLOSING_DATE ClosingDate,
+    CAST((COALESCE(creditGrlAcc.CREDIT_LIMIT_FIXED_VALUE , 0) - COALESCE(balanceInfo.PURCHASE_TOTAL, 0)) AS DECIMAL(18, 2))  OverLimitAmount,
+    balanceInfo.DUE_AMOUNT_DAYS XDaysDueAmount,
+    balanceInfo.DUE_AMOUNT_30_DAYS,
+    balanceInfo.DUE_AMOUNT_60_DAYS,
+    balanceInfo.DUE_AMOUNT_90_DAYS,
+    balanceInfo.DUE_AMOUNT_120_DAYS,
+    balanceInfo.DUE_AMOUNT_150_DAYS,
+    balanceInfo.DUE_AMOUNT_180_DAYS,
+    balanceInfo.DUE_AMOUNT_210_DAYS,
+    balanceInfo.DUE_AMOUNT_TOTAL_DAYS TotalDaysDueAmount,
+    '' as CreditAmountDate,
+    accProperty.LOYALTY_POINTS AS LoyaltyPoints,
+    gralAcc.ID_ISSUER as IdIssuer
+FROM
+    IAC_GENERAL_ACCOUNT gralAcc
+        INNER JOIN ICS_FINANCIAL_RELATION finRelMain ON finRelMain.ID_GENERAL_ACCOUNT = gralAcc.ID_GENERAL_ACCOUNT
+        INNER JOIN (SELECT ID_GENERAL_ACCOUNT, MIN(id_financial_relation) AS id_financial_relation
+                    FROM ICS_FINANCIAL_RELATION  GROUP BY ID_GENERAL_ACCOUNT)
+        finRelMain2 ON finRelMain.id_financial_relation = finRelMain2.id_financial_relation
+        INNER JOIN ICS_CUSTOMER customer ON finRelMain.ID_CUSTOMER = customer.ID_CUSTOMER
+        INNER JOIN IBC_ACCOUNT_STATUS accStatus on accStatus.ID_ACCOUNT_STATUS = gralAcc.ID_ACCOUNT_STATUS
+        LEFT OUTER JOIN AUI_DEBIT_GENERAL_ACCOUNT debitAcc ON debitAcc.ID_GENERAL_ACCOUNT = gralAcc.ID_GENERAL_ACCOUNT
+        LEFT OUTER JOIN AUI_CREDIT_GENERAL_ACCOUNT creditAcc ON creditAcc.ID_GENERAL_ACCOUNT = gralAcc.ID_GENERAL_ACCOUNT
+        LEFT OUTER JOIN AUI_PREPAID_GENERAL_ACCOUNT prepraidAcc ON prepraidAcc.ID_GENERAL_ACCOUNT = gralAcc.ID_GENERAL_ACCOUNT
+        INNER JOIN TGD_DOCUMENT_TYPE docType ON docType.ID_DOCUMENT_TYPE = customer.ID_DOCUMENT_TYPE
+        LEFT JOIN (SELECT
+                       MAX(PHONE.PHONE_NUMBER) StatementPhone
+                        ,MAX(PHONE.area_code) StatementAreaCode
+                        ,MAX(PHONE.country_code) StatementPhoneCountry
+                        ,MAX(EMAIL.EMAIL) StatementEmail
+                        ,INFO.ID_CUSTOMER
+                   FROM ICS_CUSTOMER_CONTACT_INFO INFO
+                            LEFT JOIN  ICS_PHONE_CONTACT_INFO PHONE ON PHONE.ID_CUSTOMER_CONTACT_INFO =INFO.ID_CUSTOMER_CONTACT_INFO  AND PHONE.PHONE_TYPE =4--STATEMENT PHONE
+                            LEFT JOIN ICS_EMAIL_CONTACT_INFO EMAIL ON EMAIL.ID_CUSTOMER_CONTACT_INFO =INFO.ID_CUSTOMER_CONTACT_INFO  AND EMAIL.EMAIL_TYPE =2--STATEMENT EMAIL
+                            LEFT JOIN TGD_COUNTRY COUNTRY ON COUNTRY.NUMERIC_CODE  =PHONE.country_code
+                   GROUP BY INFO.ID_CUSTOMER ) STATEMENTINFO ON  STATEMENTINFO.ID_CUSTOMER =customer.ID_CUSTOMER
+        LEFT JOIN IAC_CREDIT_GENERAL_ACCOUNT creditGrlAcc ON creditGrlAcc.ID_GENERAL_ACCOUNT = gralAcc.ID_GENERAL_ACCOUNT
+        LEFT JOIN IBC_BL_MATRIX_CONDITION_DEF blockCondition on creditGrlAcc.ID_ACCOUNT_DEBT_CONTROL = blockCondition.ID_ACCOUNT_DEBT_CONTROL
+        LEFT JOIN IFN_BALANCE_ADDITIONAL_INFO balanceInfo ON gralAcc.ID_GENERAL_ACCOUNT = balanceInfo.ID_GENERAL_ACCOUNT AND gralAcc.ACCOUNT_PERIOD = balanceInfo.ID_PERIOD
+        LEFT JOIN IFN_BALANCE balance ON gralAcc.ID_GENERAL_ACCOUNT = balance.ID_GENERAL_ACCOUNT AND gralAcc.ACCOUNT_PERIOD = balance.PERIOD
+        LEFT JOIN IBC_ACCOUNT_DEBT_CONTROL accDebControl ON creditGrlAcc.ID_ACCOUNT_DEBT_CONTROL = accDebControl.ID_ACCOUNT_DEBT_CONTROL
+        INNER JOIN IBC_CYCLE_CALENDAR calendar ON calendar.PERIOD = gralAcc.ACCOUNT_PERIOD AND calendar.ID_CYCLE = gralAcc.ID_CYCLE
+        LEFT JOIN IAC_ACCOUNT_PROPERTY accProperty on accProperty.ID_GENERAL_ACCOUNT = gralAcc.ID_GENERAL_ACCOUNT
+WHERE
+    gralAcc.ID_ISSUER = :IdIssuer AND finRelMain.FINANCIAL_RELATION_TYPE = 1 AND accStatus.STATUS_TYPE <> 4
+
+
+select CUSTOMER_INFO, ADDITIONAL_CUSTOMER_INFO, PAYMENT_MEDIA_INFO from IAC_GENERAL_ACCOUNT
+select * from C_ORGANIZATION

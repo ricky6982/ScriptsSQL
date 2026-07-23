@@ -1,0 +1,27 @@
+﻿[InternalAccountNumber] N° de Cuenta Interno	10
+[DocumentType] Tipo de Documento	5
+[DocumentTypeName] Descripción de tipo de documnento	30
+[Document] Documento	10
+[FinancialRelation] Categoría	1
+[ExternalAccountNumber] N° de Cuenta Externo	13
+[AccountHolderRelationship] Relación con el titular de la cuenta	2
+[IsCodebtor] Es codeudor	1
+[CorresponAddresSomePhysical] Dirección igual a la particular	1
+[IdStreetType] Tipo Calle	5
+[Street] Calle	256
+[DoorNumber] Número exterior	10
+[NeighbourhoodName] Colonia	256
+[NeighbourhoodCode] Cód. Colonia	7
+[CityName] Ciudad	256
+[CityCode] Cód. Ciudad	5
+[GeographicName] Estado	64
+[GeographicCode] Cód. Estado	5
+[PostalCode] Código Postal	5
+[IsBis] Es bis	1
+[Floor] Piso	20
+[Apartment] Aparamento	20
+[AdditionalInfo] Información adicional	500
+[CeeLNumber] Teléfono móvil	17
+[PhoneNumber] Teléfono particular	23
+[WarrantyType] Tipo de garantía	4
+[WarrantyDescription] Descripción de la garantía	60

@@ -87,7 +87,7 @@ The generated SQL must follow this structure.
 ```sql
 -- Script for <TYPE_NAME>
 
--- Elimina las propiedades que ya existen para no tener extras sin uso
+-- Deletes existing properties to avoid unused extras
 DELETE [IBC_ISSUER_FILE_TYPE_FIELDS]
 WHERE ID_ISSUER = 999
 AND ID_FILE_TYPE = (
@@ -98,26 +98,7 @@ AND ID_FILE_TYPE = (
 
 -- <Friendly Name> fields
 
-INSERT INTO IBC_ISSUER_FILE_TYPE_FIELDS
-(
-    ID_FILE_TYPE,
-    ID_ISSUER,
-    FIELD,
-    IS_VISIBLE,
-    LENGTH
-)
-VALUES
-(
-    (
-        SELECT ID_FILE_TYPE
-        FROM TFM_FILE_TYPE
-        WHERE TYPE_NAME = '<TYPE_NAME>'
-    ),
-    999,
-    '<PropertyName>',
-    1,
-    <Length>
-);
+INSERT INTO IBC_ISSUER_FILE_TYPE_FIELDS (ID_FILE_TYPE, ID_ISSUER, FIELD, IS_VISIBLE, LENGTH) VALUES ((SELECT ID_FILE_TYPE FROM TFM_FILE_TYPE WHERE TYPE_NAME = '<TYPE_NAME>'), 999, '<PropertyName>', 1, <Length>);
 ```
 
 Generate one `INSERT` statement for every property decorated with `[CsvOrder]`.
@@ -133,13 +114,7 @@ At the end of the generated SQL script, always append the following rollback sec
 -- Rollback
 -- =============================================
 
-DELETE [IBC_ISSUER_FILE_TYPE_FIELDS]
-WHERE ID_ISSUER = 999
-AND ID_FILE_TYPE = (
-    SELECT ID_FILE_TYPE
-    FROM TFM_FILE_TYPE
-    WHERE TYPE_NAME = '<TYPE_NAME>'
-);
+DELETE [IBC_ISSUER_FILE_TYPE_FIELDS] WHERE ID_ISSUER = 999 AND ID_FILE_TYPE = (SELECT ID_FILE_TYPE FROM TFM_FILE_TYPE WHERE TYPE_NAME = '<TYPE_NAME>');
 ```
 
 The rollback must always be the last statement in the script.

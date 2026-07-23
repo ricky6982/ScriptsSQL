@@ -1,0 +1,12 @@
+﻿IdOperation	12
+InternalAccountNumber	19
+OperationDate	8
+OperationType	3
+Currency	3
+OperationAmount	18
+Sign	2
+Description	120
+IsReversed	1
+SourceCode	2
+TransactionCode	3
+

@@ -1,6 +1,7 @@
 ﻿using PS.IssuerBusinessConfiguration.Interface.Datatypes.DTO;
 using PS.IssuerBusinessConfiguration.Interface.Enumerations;
 using PS.IssuerTransaction.Interface.Datatypes.DataDumpQueries.GetAccountClientForDataDump;
+using PS.CommonCredit.Domain.Util.Attribute;
 using System;
 using System.Collections.Generic;
 
@@ -9,34 +10,61 @@ namespace PS.IssuerTransaction.Interface.Datatypes.DataDump
     [Serializable]
     public class AccountClientForDataDumpDTO
     {
+        [CsvOrder(1)]
         public string InternalAccountNumber { get; set; }
+        [CsvOrder(2)]
         public string DocumentType { get; set; }
+        [CsvOrder(3)]
         public string DocumentTypeName { get; set; }
+        [CsvOrder(4)]
         public string Document { get; set; }
+        [CsvOrder(5)]
         public string FinancialRelation { get; set; }
+        [CsvOrder(6)]
         public string ExternalAccountNumber { get; set; }
+        [CsvOrder(7)]
         public string AccountHolderRelationship { get; set; }
+        [CsvOrder(8)]
         public string IsCodebtor { get; set; }
+        [CsvOrder(9)]
         public string CorresponAddresSomePhysical { get; set; }
+        [CsvOrder(10)]
         public string IdStreetType { get; set; }
+        [CsvOrder(11)]
         public string Street { get; set; }
+        [CsvOrder(12)]
         public string DoorNumber { get; set; }
+        [CsvOrder(13)]
         public string NeighbourhoodName { get; set; }
+        [CsvOrder(14)]
         public string NeighbourhoodCode { get; set; }
+        [CsvOrder(15)]
         public string CityName { get; set; }
         public string CityExternalCode { get; set; }
+        [CsvOrder(16)]
         public string CityCode { get; set; }
+        [CsvOrder(17)]
         public string GeographicName { get; set; }
         public string GeographicExternalCode { get; set; }
+        [CsvOrder(18)]
         public string GeographicCode { get; set; }
+        [CsvOrder(19)]
         public string PostalCode { get; set; }
+        [CsvOrder(20)]
         public string IsBis { get; set; }
+        [CsvOrder(21)]
         public string Floor { get; set; }
+        [CsvOrder(22)]
         public string Apartment { get; set; }
+        [CsvOrder(23)]
         public string AdditionalInfo { get; set; }
+        [CsvOrder(24)]
         public string CeeLNumber { get; set; }
+        [CsvOrder(25)]
         public string PhoneNumber { get; set; }
+        [CsvOrder(26)]
         public string WarrantyType { get; set; }
+        [CsvOrder(27)]
         public string WarrantyDescription { get; set; }
 
         public AccountClientForDataDumpDTO() { }

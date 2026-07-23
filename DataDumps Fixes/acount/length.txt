@@ -1,0 +1,45 @@
+﻿N° de Cuenta Interno	10
+Documento	10
+N° de Cuenta Externo	13
+Estado de la cuenta	15
+Fecha de apertura	8
+Fecha de inactivación	8
+Límite de crédito de la cuenta	12
+Saldo disponible	12
+Tipo de Documento	5
+Descripción de tipo de documnento	60
+Tipo de estado de la cuenta	1
+Habilitada para promociones	1
+Habilitada para campañas	1
+Enviar estado de cuenta a domicilio	1
+Enviar Estado de cuenta por email	1
+Enviar Estado de cuenta al celular	1
+Email Estado de cuenta	64
+Celular Estado de cuenta	11
+Código de sucursal 5
+Habilitado disposición de efectivo 1
+Modalidad de pago anticipado 1
+BlockStatusCode	2
+BlockCategoryCode	2
+ChargeOffStatus	2
+ChargeOffAmount	12
+Deliquency	14
+FinRev	2
+RiskCode	2
+CurrentBalance	12
+CreditClass	2
+LastAccStatmentDate	8
+AccountDueCode	2
+CurrentDueAmount	12
+XDaysDueAmount	12
+30DaysDueAmount	12
+60DaysDueAmount	12
+90DaysDueAmount	12
+120DaysDueAmount	12
+150DaysDueAmount	12
+180DaysDueAmount	12
+210DaysDueAmount	12
+TotalDaysDueAmount	12
+ClousureDate	8
+OverLimitAmount	12
+CreditAmountDate	8

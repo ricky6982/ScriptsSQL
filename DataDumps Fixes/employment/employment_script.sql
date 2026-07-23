@@ -6,7 +6,6 @@ SELECT * FROM TFM_FILE_TYPE WHERE TYPE_NAME = 'DATA_DUMP_RPT_EMPLOY' or TYPE_NAM
 
 -- esta query no retorna DATA_DUMP_RPT_EMPLOY y por eso no genera el archivo
 SELECT
-    p.*,
     IFT.ID_ISSUER_FILE_TYPE IdIssuerFileType,
     IFT.ID_ISSUER	IdIssuer,
     IFT.ID_FILE_TYPE IdFileType,

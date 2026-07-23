@@ -11,7 +11,6 @@ namespace PS.IssuerTransaction.Interface.Datatypes.DataDump
     [Serializable]
     public class TransactionsForDataDumpDTO
     {
-        public string IdTransaction { get; set; }
         [CsvOrder(1)]
         public string RetrievalRefno { get; set; }
         [CsvOrder(2)]
@@ -106,13 +105,11 @@ namespace PS.IssuerTransaction.Interface.Datatypes.DataDump
         public string ProductPlan { get; set; }
         [CsvOrder(47)]
         public string TransCode { get; set; }
-        // Sin CsvOrder - No existe en length.txt
-        public string ComunicationDeviceIndicator { get; set; }
 
         public TransactionsForDataDumpDTO() { }
         public TransactionsForDataDumpDTO(GetTransactionsForDataDumpOutputDTO DTO)
         {
-            IdTransaction = DTO.IdTransaction.ToString();
+            RetrievalRefno = DTO.IdTransaction.ToString();
             InternalAccountNumber = DTO.InternalAccountNumber ?? string.Empty;
             MCC = DTO.MCC != null ? DTO.MCC.ToString() : string.Empty;
             ResponseCode = !string.IsNullOrWhiteSpace(DTO.ResponseCode) ? DTO.ResponseCode.Trim() : string.Empty;
@@ -130,6 +127,7 @@ namespace PS.IssuerTransaction.Interface.Datatypes.DataDump
             MerchantID = !string.IsNullOrWhiteSpace(DTO.MerchantID) ? DTO.MerchantID.Trim() : string.Empty;
             MerchantName = !string.IsNullOrWhiteSpace(DTO.MerchantName) ? DTO.MerchantName.Trim() : string.Empty;
             EntryMode = DTO.EntryMode != null ? DTO.EntryMode.ToString() : string.Empty;
+            Eci = DTO.ComunicationDeviceIndicator != null ? DTO.ComunicationDeviceIndicator.ToString() : string.Empty;
             ResponseDescription = !string.IsNullOrWhiteSpace(DTO.ResponseDescription) ? DTO.ResponseDescription.Trim() : string.Empty;
             isFinancial = !string.IsNullOrWhiteSpace(DTO.isFinancial) ? DTO.isFinancial.Trim() : string.Empty;
             ApliedDCC = DTO.ApliedDCC.ToString();
@@ -149,7 +147,6 @@ namespace PS.IssuerTransaction.Interface.Datatypes.DataDump
             GeoState = !string.IsNullOrWhiteSpace(DTO.GeoState) ? DTO.GeoState.Trim() : string.Empty;
             CityOrigin = !string.IsNullOrWhiteSpace(DTO.CityOrigin) ? DTO.CityOrigin.Trim() : string.Empty;
             ZipCode = !string.IsNullOrWhiteSpace(DTO.ZipCode) ? DTO.ZipCode.Trim() : string.Empty;
-            ComunicationDeviceIndicator = DTO.ComunicationDeviceIndicator ?? string.Empty;
             InstallmentQuantity = DTO.InstallmentQuantity.HasValue ? DTO.InstallmentQuantity.ToString() : string.Empty;
             SalePlanCode = DTO.SalePlanCode ?? string.Empty;
             SalePlanName = DTO.SalePlanName ?? string.Empty;

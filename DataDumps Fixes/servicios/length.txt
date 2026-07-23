@@ -1,0 +1,16 @@
+﻿RETRIEVALREFNO	12
+ACCOUNT	19
+OPERATION_DATE	8
+SERVICE_TYPE	2
+SERVICE_NAME	60
+CURRENCY	3
+SIGN	2
+AMOUNT	13
+IVA	13
+SourceCode	2
+ProductCode	2
+ServiceAmount	13
+SubscriptionDate	8
+SubscriptionDate2	8
+PolicyStatus	1
+TransCode	3
